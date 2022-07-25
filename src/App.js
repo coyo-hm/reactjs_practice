@@ -11,12 +11,11 @@ const Btn = styled.button`
   border-radius: 15px;
 `;
 
-const Link = styled(Btn)``;
-
 function App() {
   return (
     <Parent>
       <Btn>LOGIN</Btn>
+      <Btn as={"a"}>LOGIN</Btn>
     </Parent>
   );
 }
