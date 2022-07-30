@@ -1,10 +1,33 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { Container, Header, Loader, Title } from "../style";
 import { CoinInterface } from "../interface";
 import styled from "styled-components";
+import Chart from "./Chart";
+import Price from "./Price";
 
 const InfoContainer = styled.div`
+  p {
+    margin: 20px 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+const Overview = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #1e2129;
+  padding: 20px;
+
   div {
     font-size: 14px;
   }
@@ -13,21 +36,6 @@ const InfoContainer = styled.div`
     font-size: 20px;
     margin-top: 10px;
   }
-
-  p {
-    margin: 20px 0;
-    font-size: 16px;
-    line-height: 24px;
-  }
-`;
-
-const BlackBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 10px;
-  background-color: #1e2129;
-  padding: 20px;
 `;
 
 interface ILocation {
@@ -116,13 +124,15 @@ function Coin() {
   return (
     <Container>
       <Header>
-        <Title>{coin?.name || "Loading"}</Title>
+        <Title>
+          {coin?.name ? coin?.name : loading ? "Loading" : info?.name}
+        </Title>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
         <InfoContainer>
-          <BlackBox>
+          <Overview>
             <div>
               RANK: <br />
               <h1>{info?.rank}</h1>
@@ -135,9 +145,9 @@ function Coin() {
               OPEN SOURCE: <br />
               <h1>{info?.open_source ? "YES" : "NO"}</h1>
             </div>
-          </BlackBox>
+          </Overview>
           <p>{info?.description}</p>
-          <BlackBox>
+          <Overview>
             <div>
               TOTAL SUPLY: <br />
               <h1>{priceInfo?.total_supply}</h1>
@@ -146,7 +156,8 @@ function Coin() {
               MAX SUPLY: <br />
               <h1>{priceInfo?.max_supply}</h1>
             </div>
-          </BlackBox>
+          </Overview>
+          <Outlet />
         </InfoContainer>
       )}
     </Container>
