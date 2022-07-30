@@ -5,5 +5,5 @@ export const theme: DefaultTheme = {
   textColor: "#f5f6fa",
   btnColor: "#fbc531",
   btnHoverColor: "#e1b12c",
-  accentColor: "#c23616",
+  accentColor: "#e17055",
 };
