@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-const Container = styled.div`
-  padding: 0 20px;
-  max-width: 480px;
-  margin: 0 auto;
-`;
-
-const Header = styled.header`
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
+import { Container, Header, Loader, Title } from "../style";
+import { CoinInterface } from "../interface";
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
@@ -25,6 +13,16 @@ const Coin = styled.li`
   border-radius: 15px;
   transition: color 0.2s ease-in;
   cursor: pointer;
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    height: 35px;
+    margin-right: 10px;
+  }
   &:last-child {
     margin-bottom: 0;
   }
@@ -33,25 +31,6 @@ const Coin = styled.li`
     color: ${(props) => props.theme.accentColor};
   }
 `;
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
-`;
-
-const Loader = styled.div`
-  text-align: center;
-`;
-
-interface CoinInterface {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
 
 function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
@@ -77,7 +56,12 @@ function Coins() {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={`/${coin.id}`} state={coin}>
+                <img
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>
