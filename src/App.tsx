@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
+import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -39,6 +40,14 @@ footer, header, hgroup, main, menu, nav, section {
 }
 body {
   line-height: 1;
+  background: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
+}
+button{
+  background-color: ${(props) => props.theme.btnColor};
+}
+button:hover{
+ background-color: ${(props) => props.theme.btnHoverColor};
 }
 menu, ol, ul {
   list-style: none;
