@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import {
+  Link,
   Outlet,
-  Route,
-  Routes,
   useLocation,
+  useMatch,
   useParams,
 } from "react-router-dom";
 import { Container, Header, Loader, Title } from "../style";
 import { CoinInterface } from "../interface";
 import styled from "styled-components";
-import Chart from "./Chart";
-import Price from "./Price";
 
 const InfoContainer = styled.div`
   p {
@@ -36,6 +34,28 @@ const Overview = styled.div`
     font-size: 20px;
     margin-top: 10px;
   }
+`;
+
+const Tabs = styled.div`
+  margin: 30px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Tab = styled(Link)<{ isactive: string }>`
+  background-color: #1e2129;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${(props) =>
+    props.isactive === "true"
+      ? props.theme.accentColor
+      : props.theme.textColor};
+  font-size: 20px;
+  font-weight: 400px;
+  border-radius: 20px;
+  width: 47%;
+  padding: 15px;
 `;
 
 interface ILocation {
@@ -101,6 +121,9 @@ function Coin() {
   const { coinId } = useParams();
   const { state: coin } = useLocation() as ILocation;
 
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
+
   const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState<IInfoData>();
   const [priceInfo, setPriceInfo] = useState<IPriceData>();
@@ -157,6 +180,20 @@ function Coin() {
               <h1>{priceInfo?.max_supply}</h1>
             </div>
           </Overview>
+          <Tabs>
+            <Tab
+              isactive={chartMatch !== null ? "true" : "false"}
+              to={`/${coinId}/chart`}
+            >
+              Chart
+            </Tab>
+            <Tab
+              isactive={priceMatch !== null ? "true" : "false"}
+              to={`/${coinId}/price`}
+            >
+              Price
+            </Tab>
+          </Tabs>
           <Outlet />
         </InfoContainer>
       )}
