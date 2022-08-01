@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { Container, Header, Loader, Title } from "../style";
-import { CoinInterface } from "../interface";
+import { ICoin } from "../interface";
 import styled from "styled-components";
 
 const InfoContainer = styled.div`
@@ -59,7 +59,7 @@ const Tab = styled(Link)<{ isactive: string }>`
 `;
 
 interface ILocation {
-  state: CoinInterface;
+  state: ICoin;
 }
 
 interface IInfoData {
