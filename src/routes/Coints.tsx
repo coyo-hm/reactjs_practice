@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Container, Header, Loader, Title } from "../style";
-import { CoinInterface } from "../interface";
+import { ICoin } from "../interface";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCoins } from "../api";
+
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
@@ -33,32 +36,23 @@ const Coin = styled.li`
 `;
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const data = await response.json();
-      setCoins(data.slice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
+  const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
 
   return (
     <Container>
       <Header>
         <Title>COIN</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={coin}>
                 <img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt={""}
                 />
                 {coin.name} &rarr;
               </Link>
