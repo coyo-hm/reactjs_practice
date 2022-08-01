@@ -21,6 +21,21 @@ function Chart() {
     fetchCoinHistory(coinId)
   );
 
-  return <h1>Chart</h1>;
+  return (
+    <div>
+      {isLoading ? (
+        "Loading chart..."
+      ) : (
+        <ApexChart
+          type="line"
+          series={[
+            { name: "hello", data: [1, 2, 3, 8, 9] },
+            { name: "hello", data: [15, 52, 35, 85, 95] },
+          ]} // data 작성
+          options={{ chart: { height: 500, width: 500 } }}
+        />
+      )}
+    </div>
+  );
 }
 export default Chart;
