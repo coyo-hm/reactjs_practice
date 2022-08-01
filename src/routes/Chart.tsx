@@ -29,10 +29,16 @@ function Chart() {
         <ApexChart
           type="line"
           series={[
-            { name: "hello", data: [1, 2, 3, 8, 9] },
-            { name: "hello", data: [15, 52, 35, 85, 95] },
+            {
+              name: "sales",
+              data: data?.map((price) => parseFloat(price.close)) ?? [],
+            },
           ]} // data 작성
-          options={{ chart: { height: 500, width: 500 } }}
+          options={{
+            theme: { mode: "dark" },
+            chart: { height: 500, width: 500, background: "none" },
+            colors: ["#e17055"],
+          }}
         />
       )}
     </div>
