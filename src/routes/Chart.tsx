@@ -30,14 +30,31 @@ function Chart() {
           type="line"
           series={[
             {
-              name: "sales",
-              data: data?.map((price) => parseFloat(price.close)) ?? [],
+              name: "Price",
+              data:
+                data?.map((price) => {
+                  console.log(price.time_open);
+                  return parseFloat(price.close);
+                }) ?? [],
             },
           ]} // data 작성
           options={{
             theme: { mode: "dark" },
-            chart: { height: 500, width: 500, background: "none" },
+            chart: {
+              height: 500,
+              width: 500,
+              background: "none",
+              toolbar: { show: false },
+            },
+            grid: { show: false },
             colors: ["#e17055"],
+            stroke: { curve: "smooth", width: 5 },
+            yaxis: {
+              show: false,
+            },
+            xaxis: {
+              axisTicks: { show: false },
+            },
           }}
         />
       )}
