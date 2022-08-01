@@ -9,6 +9,8 @@ import {
 import { Container, Header, Loader, Title } from "../style";
 import { ICoin } from "../interface";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCoinInfo, fetchCoinTicker } from "../api";
 
 const InfoContainer = styled.div`
   p {
@@ -124,25 +126,16 @@ function Coin() {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
-  const [loading, setLoading] = useState(true);
-  const [info, setInfo] = useState<IInfoData>();
-  const [priceInfo, setPriceInfo] = useState<IPriceData>();
+  const { isLoading: infoLoading, data: info } = useQuery<IInfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: priceLoading, data: priceInfo } = useQuery<IPriceData>(
+    ["tickers", coinId],
+    () => fetchCoinTicker(coinId)
+  );
 
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-
-      setInfo(infoData);
-      setPriceInfo(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const loading = infoLoading && priceLoading;
 
   return (
     <Container>

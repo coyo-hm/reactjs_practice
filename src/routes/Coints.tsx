@@ -5,6 +5,7 @@ import { Container, Header, Loader, Title } from "../style";
 import { ICoin } from "../interface";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
+
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
@@ -51,6 +52,7 @@ function Coins() {
               <Link to={`/${coin.id}`} state={coin}>
                 <img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt={""}
                 />
                 {coin.name} &rarr;
               </Link>
