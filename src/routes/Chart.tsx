@@ -31,11 +31,7 @@ function Chart() {
           series={[
             {
               name: "Price",
-              data:
-                data?.map((price) => {
-                  console.log(price.time_open);
-                  return parseFloat(price.close);
-                }) ?? [],
+              data: data?.map((price) => parseFloat(price.close)) ?? [],
             },
           ]} // data 작성
           options={{
@@ -49,11 +45,23 @@ function Chart() {
             grid: { show: false },
             colors: ["#e17055"],
             stroke: { curve: "smooth", width: 5 },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["purple"], stops: [0, 100] },
+            },
             yaxis: {
               show: false,
             },
             xaxis: {
               axisTicks: { show: false },
+              type: "datetime",
+              categories: data?.map((price) => price.time_close) ?? [],
+            },
+
+            tooltip: {
+              y: {
+                formatter: (value) => `$ ${value.toFixed(2)}`,
+              },
             },
           }}
         />
