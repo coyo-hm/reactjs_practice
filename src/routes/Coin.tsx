@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { Container, Header, Loader, Title } from "../style";
-import { ICoin } from "../interface";
+import { ICoin, IPriceData } from "../interface";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTicker } from "../api";
@@ -103,40 +103,6 @@ interface IInfoData {
   last_data_at: string;
 }
 
-interface IPriceData {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  circulating_supply: number;
-  total_supply: number;
-  max_supply: number;
-  beta_value: number;
-  first_data_at: string;
-  last_updated: string;
-  quotes: {
-    USD: {
-      price: number;
-      volume_24h: number;
-      volume_24h_change_24h: number;
-      market_cap: number;
-      market_cap_change_24h: number;
-      percent_change_15m: number;
-      percent_change_30m: number;
-      percent_change_1h: number;
-      percent_change_6h: number;
-      percent_change_12h: number;
-      percent_change_24h: number;
-      percent_change_7d: number;
-      percent_change_30d: number;
-      percent_change_1y: number;
-      percent_from_price_ath: number;
-      ath_price: number;
-      ath_date: string;
-    };
-  };
-}
-
 function Coin() {
   const { coinId } = useParams();
   const { state: coin } = useLocation() as ILocation;
@@ -211,6 +177,7 @@ function Coin() {
             <Tab
               isactive={priceMatch !== null ? "true" : "false"}
               to={`/${coinId}/price`}
+              state={priceInfo}
             >
               Price
             </Tab>
