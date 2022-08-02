@@ -132,7 +132,10 @@ function Coin() {
   );
   const { isLoading: priceLoading, data: priceInfo } = useQuery<IPriceData>(
     ["tickers", coinId],
-    () => fetchCoinTicker(coinId)
+    () => fetchCoinTicker(coinId),
+    {
+      refetchInterval: 5000, // 이 query를 5초마다 refetch한다.
+    }
   );
 
   const loading = infoLoading && priceLoading;
@@ -158,8 +161,8 @@ function Coin() {
               <h1>{info?.symbol}</h1>
             </div>
             <div>
-              OPEN SOURCE: <br />
-              <h1>{info?.open_source ? "YES" : "NO"}</h1>
+              PRICE: <br />
+              <h1>{priceInfo?.quotes.USD.price.toFixed(3)}</h1>
             </div>
           </Overview>
           <p>{info?.description}</p>
