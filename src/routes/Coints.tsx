@@ -5,6 +5,7 @@ import { Container, Header, Loader, Title } from "../style";
 import { ICoin } from "../interface";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 const CoinsList = styled.ul``;
 
@@ -40,6 +41,9 @@ function Coins() {
 
   return (
     <Container>
+      <Helmet>
+        <title>COIN</title>
+      </Helmet>
       <Header>
         <Title>COIN</Title>
       </Header>

@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.0.10",
+    "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.3.3"
   }
 }

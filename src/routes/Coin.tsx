@@ -11,6 +11,7 @@ import { ICoin } from "../interface";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTicker } from "../api";
+import { Helmet } from "react-helmet";
 
 const InfoContainer = styled.div`
   p {
@@ -58,6 +59,23 @@ const Tab = styled(Link)<{ isactive: string }>`
   border-radius: 20px;
   width: 47%;
   padding: 15px;
+`;
+
+const BackBtn = styled(Link)`
+  border: 1px solid ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.textColor};
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 24px;
+  position: absolute;
+  left: calc(50% - 215px);
+  text-align: center;
+  box-sizing: border-box;
+  padding: 5px;
+
+  &:hover {
+    background-color: #1e2129;
+  }
 `;
 
 interface ILocation {
@@ -142,7 +160,14 @@ function Coin() {
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {coin?.name ? coin?.name : loading ? "Loading" : info?.name}
+        </title>
+      </Helmet>
+
       <Header>
+        <BackBtn to={"/"}>←</BackBtn>
         <Title>
           {coin?.name ? coin?.name : loading ? "Loading" : info?.name}
         </Title>
