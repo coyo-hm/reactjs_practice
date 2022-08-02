@@ -27,41 +27,35 @@ function Chart() {
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
               name: "Price",
-              data: data?.map((price) => parseFloat(price.close)) ?? [],
+              data:
+                data?.map((price) => {
+                  return {
+                    x: price.time_open,
+                    y: [price.open, price.high, price.low, price.close],
+                  };
+                }) ?? [],
             },
           ]} // data 작성
           options={{
             theme: { mode: "dark" },
             chart: {
+              type: "candlestick",
               height: 500,
               width: 500,
               background: "none",
               toolbar: { show: false },
             },
             grid: { show: false },
-            colors: ["#e17055"],
-            stroke: { curve: "smooth", width: 5 },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["purple"], stops: [0, 100] },
-            },
             yaxis: {
               show: false,
             },
             xaxis: {
               axisTicks: { show: false },
               type: "datetime",
-              categories: data?.map((price) => price.time_close) ?? [],
-            },
-
-            tooltip: {
-              y: {
-                formatter: (value) => `$ ${value.toFixed(2)}`,
-              },
             },
           }}
         />
