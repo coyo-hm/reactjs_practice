@@ -27,10 +27,7 @@ function Router({ toggleTheme, isDark }: IRouterProps) {
           <Route path={`chart`} element={<Chart isDark={isDark} />} />
           <Route path={`price`} element={<Price />} />
         </Route>
-        <Route
-          path="/"
-          element={<Coins toggleTheme={toggleTheme} isDark={isDark} />}
-        />
+        <Route path="/" element={<Coins toggleTheme={toggleTheme} />} />
       </Routes>
     </BrowserRouter>
   );
