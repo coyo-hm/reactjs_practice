@@ -76,9 +76,11 @@ a{
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Router />
+        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+      </ThemeProvider>
     </>
   );
 }
