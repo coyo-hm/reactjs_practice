@@ -36,11 +36,7 @@ const Coin = styled.li`
   }
 `;
 
-interface ICoinsProps {
-  toggleTheme: () => void;
-}
-
-function Coins({ toggleTheme }: ICoinsProps) {
+function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
 
   return (

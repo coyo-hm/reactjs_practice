@@ -77,14 +77,11 @@ a{
 `;
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => setIsDark((prev) => !prev);
-
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Router toggleTheme={toggleDark} isDark={isDark} />
+        <Router />
         {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       </ThemeProvider>
     </>

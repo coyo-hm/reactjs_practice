@@ -14,11 +14,7 @@ interface IHistorical {
   market_cap: number;
 }
 
-interface IChartProps {
-  isDark: boolean;
-}
-
-function Chart({ isDark }: IChartProps) {
+function Chart() {
   const { coinId } = useParams();
 
   const { isLoading, data } = useQuery<IHistorical[]>(["price", coinId], () =>
