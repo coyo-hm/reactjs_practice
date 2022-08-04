@@ -14,7 +14,11 @@ interface IHistorical {
   market_cap: number;
 }
 
-function Chart() {
+interface IChartProps {
+  isDark: boolean;
+}
+
+function Chart({ isDark }: IChartProps) {
   const { coinId } = useParams();
 
   const { isLoading, data } = useQuery<IHistorical[]>(["price", coinId], () =>
@@ -41,7 +45,7 @@ function Chart() {
             },
           ]} // data 작성
           options={{
-            theme: { mode: "dark" },
+            theme: { mode: isDark ? "dark" : "light" },
             chart: {
               type: "candlestick",
               height: 500,

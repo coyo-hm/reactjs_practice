@@ -36,7 +36,11 @@ const Coin = styled.li`
   }
 `;
 
-function Coins() {
+interface ICoinsProps {
+  toggleTheme: () => void;
+}
+
+function Coins({ toggleTheme }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
 
   return (
@@ -46,6 +50,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>COIN</Title>
+        <button onClick={toggleTheme}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
