@@ -41,7 +41,7 @@ function Chart() {
             },
           ]} // data 작성
           options={{
-            theme: { mode: "dark" },
+            theme: { mode: isDark ? "dark" : "light" },
             chart: {
               type: "candlestick",
               height: 500,
