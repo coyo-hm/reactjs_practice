@@ -40,15 +40,20 @@ import { useForm } from "react-hook-form";
 // }
 
 function ToDoList() {
-  const { register, watch } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  const onVaild = (data: any) => {
+    // react-hook-form이 모든 validation을 다 마쳤을 때만 호출
+    console.log(data);
+  };
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(onVaild)}>
         <input {...register("email")} placeholder={"Email"} />
         <input {...register("name")} placeholder={"User Name"} />
         <input {...register("password")} placeholder={"Password"} />
-        <input {...register("paaswordCheck")} placeholder={"Password"} />
+        <input {...register("passwordCheck")} placeholder={"Password"} />
         <button>Add</button>
       </form>
     </div>
