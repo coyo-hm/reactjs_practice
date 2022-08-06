@@ -51,6 +51,7 @@ const ErrorMsg = styled.span`
 //     </div>
 //   );
 // }
+
 interface IForm {
   email: string;
   username?: string;
