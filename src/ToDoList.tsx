@@ -65,7 +65,13 @@ function ToDoList() {
     <div>
       <SignupForm onSubmit={handleSubmit(onVaild)}>
         <input
-          {...register("email", { required: true })}
+          {...register("email", {
+            required: true,
+            pattern: {
+              value: /^ [A - Za - z0 -9._ % +-] +@gmail.com$/,
+              message: "gmail만 주소만 허용됩니다.",
+            },
+          })}
           placeholder={"Email"}
         />
         <input
