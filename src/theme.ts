@@ -7,11 +7,3 @@ export const darkTheme: DefaultTheme = {
   btnHoverColor: "#e1b12c",
   accentColor: "#e17055",
 };
-
-export const lightTheme: DefaultTheme = {
-  bgColor: "whitesmoke",
-  textColor: "black",
-  btnColor: "#fbc531",
-  btnHoverColor: "#e1b12c",
-  accentColor: "#e17055",
-};
