@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { darkTheme } from "./style/theme";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
+
+const SignupForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 50px auto;
+`;
 
 // function ToDoList() {
 //   const [toDo, setToDo] = useState("");
@@ -40,22 +48,46 @@ import { useForm } from "react-hook-form";
 // }
 
 function ToDoList() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
 
   const onVaild = (data: any) => {
-    // react-hook-form이 모든 validation을 다 마쳤을 때만 호출
     console.log(data);
   };
 
+  console.log(formState.errors);
+  /*
+  password: {type: 'minLength', message: 'Password는 8자 이상이어야 합니다.', ref: input}
+  passwordCheck: {type: 'minLength', message: '', ref: input}
+  username: {type: 'required', message: '', ref: input}
+  */
+
   return (
     <div>
-      <form onSubmit={handleSubmit(onVaild)}>
-        <input {...register("email")} placeholder={"Email"} />
-        <input {...register("name")} placeholder={"User Name"} />
-        <input {...register("password")} placeholder={"Password"} />
-        <input {...register("passwordCheck")} placeholder={"Password"} />
+      <SignupForm onSubmit={handleSubmit(onVaild)}>
+        <input
+          {...register("email", { required: true })}
+          placeholder={"Email"}
+        />
+        <input
+          {...register("username", { required: true })}
+          placeholder={"User Name"}
+        />
+        <input
+          {...register("password", {
+            required: true,
+            minLength: {
+              value: 8,
+              message: "Password는 8자 이상이어야 합니다.",
+            },
+          })}
+          placeholder={"Password"}
+        />
+        <input
+          {...register("passwordCheck", { required: true, minLength: 8 })}
+          placeholder={"Password"}
+        />
         <button>Add</button>
-      </form>
+      </SignupForm>
     </div>
   );
 }
