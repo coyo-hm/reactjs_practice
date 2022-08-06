@@ -10,6 +10,11 @@ const SignupForm = styled.form`
   margin: 50px auto;
 `;
 
+const ErrorMsg = styled.span`
+  margin: 10px 0;
+  color: red;
+`;
+
 // function ToDoList() {
 //   const [toDo, setToDo] = useState("");
 //   const [toDoError, setToDoError] = useState("");
@@ -46,41 +51,49 @@ const SignupForm = styled.form`
 //     </div>
 //   );
 // }
+interface IForm {
+  email: string;
+  username?: string;
+  password: string;
+  passwordCheck: string;
+}
 
 function ToDoList() {
-  const { register, handleSubmit, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({ defaultValues: { email: "@gmail.com" } });
 
   const onVaild = (data: any) => {
     console.log(data);
   };
 
-  console.log(formState.errors);
-  /*
-  password: {type: 'minLength', message: 'Password는 8자 이상이어야 합니다.', ref: input}
-  passwordCheck: {type: 'minLength', message: '', ref: input}
-  username: {type: 'required', message: '', ref: input}
-  */
+  console.log(errors);
 
   return (
     <div>
       <SignupForm onSubmit={handleSubmit(onVaild)}>
         <input
           {...register("email", {
-            required: true,
+            required: "Email은 필수 항목입니다.",
             pattern: {
-              value: /^ [A - Za - z0 -9._ % +-] +@gmail.com$/,
+              value: /^[A-Za-z0-9._ %+-]+@gmail\.com$/,
               message: "gmail만 주소만 허용됩니다.",
             },
           })}
           placeholder={"Email"}
         />
-        <input
-          {...register("username", { required: true })}
-          placeholder={"User Name"}
-        />
+        {errors.email && errors.email?.message !== "" && (
+          <ErrorMsg>{errors?.email?.message}</ErrorMsg>
+        )}
+        <input {...register("username")} placeholder={"User Name"} />
+        {errors.username && errors.username?.message !== "" && (
+          <ErrorMsg>{errors?.username?.message}</ErrorMsg>
+        )}
         <input
           {...register("password", {
-            required: true,
+            required: "필수 항목입니다.",
             minLength: {
               value: 8,
               message: "Password는 8자 이상이어야 합니다.",
@@ -88,10 +101,19 @@ function ToDoList() {
           })}
           placeholder={"Password"}
         />
+        {errors.password && errors.password?.message !== "" && (
+          <ErrorMsg>{errors?.password?.message}</ErrorMsg>
+        )}
         <input
-          {...register("passwordCheck", { required: true, minLength: 8 })}
+          {...register("passwordCheck", {
+            required: "필수 항목입니다.",
+            minLength: 8,
+          })}
           placeholder={"Password"}
         />
+        {errors.passwordCheck && errors.passwordCheck?.message !== "" && (
+          <ErrorMsg>{errors?.passwordCheck?.message}</ErrorMsg>
+        )}
         <button>Add</button>
       </SignupForm>
     </div>
