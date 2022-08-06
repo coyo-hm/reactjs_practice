@@ -40,12 +40,15 @@ import { useForm } from "react-hook-form";
 // }
 
 function ToDoList() {
-  const { register } = useForm();
+  const { register, watch } = useForm();
 
   return (
     <div>
       <form>
-        <input {...register("toDo")} placeholder={"Write a to do"} />
+        <input {...register("email")} placeholder={"Email"} />
+        <input {...register("name")} placeholder={"User Name"} />
+        <input {...register("password")} placeholder={"Password"} />
+        <input {...register("paaswordCheck")} placeholder={"Password"} />
         <button>Add</button>
       </form>
     </div>
