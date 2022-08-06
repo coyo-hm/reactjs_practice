@@ -6,6 +6,8 @@ import { ICoin } from "../interface";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atom";
 
 const CoinsList = styled.ul``;
 
@@ -38,6 +40,10 @@ const Coin = styled.li`
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
+
+  const setIsDarkAtom = useSetRecoilState(isDarkAtom);
+
+  const toggleTheme = () => setIsDarkAtom((prev) => !prev);
 
   return (
     <Container>
