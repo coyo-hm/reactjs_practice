@@ -15,48 +15,12 @@ const ErrorMsg = styled.span`
   color: red;
 `;
 
-// function ToDoList() {
-//   const [toDo, setToDo] = useState("");
-//   const [toDoError, setToDoError] = useState("");
-
-//   const onChangeValue = (e: React.FormEvent<HTMLInputElement>) => {
-//     const {
-//       currentTarget: { value },
-//     } = e;
-//     setToDoError("");
-//     setToDo(value);
-//   };
-
-//   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (toDo.length < 10) {
-//       return setToDoError("To do should be longer");
-//     }
-//     console.log(toDo);
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={onSubmit}>
-//         <input
-//           onChange={onChangeValue}
-//           value={toDo}
-//           placeholder={"Write a to do"}
-//         />
-//         <button>Add</button>
-//         {toDoError !== "" ? (
-//           <span style={{ color: `${darkTheme.textColor}` }}>{toDoError}</span>
-//         ) : null}
-//       </form>
-//     </div>
-//   );
-// }
-
 interface IForm {
   email: string;
   username?: string;
   password: string;
   passwordCheck: string;
+  extraError?: string;
 }
 
 function ToDoList() {
@@ -64,9 +28,20 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IForm>({ defaultValues: { email: "@gmail.com" } });
 
-  const onVaild = (data: any) => {
+  const onVaild = (data: IForm) => {
+    if (data.password !== data.passwordCheck) {
+      setError(
+        "passwordCheck",
+        { message: "비밀번호가 일치하지 않습니다." },
+        { shouldFocus: true }
+      );
+    }
+
+    setError("extraError", { message: "에러가 발생했습니다." }); // form 전체에 해당되는 에러이다.
+
     console.log(data);
   };
 
@@ -109,6 +84,18 @@ function ToDoList() {
           {...register("passwordCheck", {
             required: "필수 항목입니다.",
             minLength: 8,
+            validate: {
+              noHello: (value) => {
+                return value.includes("hello")
+                  ? "hello는 포함할 수 없습니다."
+                  : true;
+              },
+              no1234: (value) => {
+                return value.includes("1234")
+                  ? "1234는 포함할 수 없습니다."
+                  : true;
+              },
+            },
           })}
           placeholder={"Password"}
         />
