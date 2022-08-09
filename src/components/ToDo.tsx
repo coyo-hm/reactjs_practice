@@ -46,7 +46,23 @@ function ToDo({ text, id, category }: IToDo) {
   const setToDoList = useSetRecoilState(toDoListState);
 
   const onClickCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { currentTarget: name } = event;
+    const {
+      currentTarget: { name },
+    } = event;
+
+    setToDoList((prev) => {
+      const targetIndex = prev.findIndex((toDo) => toDo.id === id);
+      const prevToDo = prev[targetIndex];
+      const newToDo = {
+        ...prevToDo,
+        category: name as any,
+      };
+      return [
+        ...prev.slice(0, targetIndex),
+        newToDo,
+        ...prev.slice(targetIndex + 1),
+      ];
+    });
   };
 
   return (
