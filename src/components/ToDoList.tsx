@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDoListState } from "../atoms";
+import { toDoListState, toDoSelector } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
@@ -16,6 +16,7 @@ const ToDoListContainer = styled.ul`
 
 function ToDoList() {
   const toDoList = useRecoilValue(toDoListState);
+  const toDoSelectorOutput = useRecoilValue(toDoSelector);
 
   return (
     <Container>

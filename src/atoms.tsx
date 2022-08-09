@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 export interface IToDo {
   text: string;
@@ -9,4 +9,16 @@ export interface IToDo {
 export const toDoListState = atom<IToDo[]>({
   key: "toDoList",
   default: [],
+});
+
+export const toDoSelector = selector({
+  key: "toDoSelector",
+  get: ({ get }) => {
+    const toDoList = get(toDoListState);
+    return [
+      toDoList.filter((toDo) => toDo.category === "TO_DO"),
+      toDoList.filter((toDo) => toDo.category === "DOING"),
+      toDoList.filter((toDo) => toDo.category === "DONE"),
+    ];
+  },
 });
