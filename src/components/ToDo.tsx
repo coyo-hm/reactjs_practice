@@ -1,10 +1,6 @@
 import { IToDo } from "../atoms";
 
-interface IProps {
-  toDo: IToDo;
-}
-
-function ToDo({ toDo }: IProps) {
+function ToDo({ text, id, category }: IToDo) {
   return <li>{toDo.text}</li>;
 }
 

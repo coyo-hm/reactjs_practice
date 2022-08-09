@@ -1,10 +1,10 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { toDoListState } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 function ToDoList() {
-  const [toDoList, setToDoList] = useRecoilState(toDoListState);
+  const toDoList = useRecoilValue(toDoListState);
 
   return (
     <div>
@@ -13,7 +13,7 @@ function ToDoList() {
       <CreateToDo />
       <ul>
         {toDoList.map((toDo) => (
-          <ToDo key={toDo.id} toDo={toDo} />
+          <ToDo key={toDo.id} {...toDo} />
         ))}
       </ul>
     </div>
