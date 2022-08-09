@@ -14,17 +14,36 @@ const ToDoListContainer = styled.ul`
   margin: 10px 0;
 `;
 
+const CategoryTitle = styled.h2`
+  margin: 10px 0;
+`;
+
 function ToDoList() {
   const toDoList = useRecoilValue(toDoListState);
-  const toDoSelectorOutput = useRecoilValue(toDoSelector);
+  const [toDos, doings, dones] = useRecoilValue(toDoSelector);
 
   return (
     <Container>
       <h1>TODO</h1>
       <hr />
       <CreateToDo />
+      <CategoryTitle>To Do</CategoryTitle>
       <ToDoListContainer>
-        {toDoList.map((toDo) => (
+        {toDos.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ToDoListContainer>
+      <hr />
+      <CategoryTitle>Doing</CategoryTitle>
+      <ToDoListContainer>
+        {doings.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ToDoListContainer>
+      <hr />
+      <CategoryTitle>Done</CategoryTitle>
+      <ToDoListContainer>
+        {dones.map((toDo) => (
           <ToDo key={toDo.id} {...toDo} />
         ))}
       </ToDoListContainer>
