@@ -1,6 +1,25 @@
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { toDoListState } from "../atoms";
+
+const Container = styled.form`
+  display: flex;
+`;
+
+const ToDoInput = styled.input`
+  font-size: 20px;
+  width: calc(100% - 57px);
+  height: 37px;
+  border-radius: 4px;
+  padding: 10px;
+`;
+
+const CreateBtn = styled.button`
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 4px;
+`;
 
 interface IForm {
   toDo: string;
@@ -19,13 +38,13 @@ function CreateToDo({}) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input
+    <Container onSubmit={handleSubmit(onSubmit)}>
+      <ToDoInput
         {...register("toDo", { required: "Please fill in the blank" })}
         placeholder="Write a To do"
       />
-      <button>ADD</button>
-    </form>
+      <CreateBtn>ADD</CreateBtn>
+    </Container>
   );
 }
 
