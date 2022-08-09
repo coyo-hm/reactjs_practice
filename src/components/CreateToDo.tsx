@@ -12,7 +12,7 @@ const ToDoInput = styled.input`
   width: calc(100% - 57px);
   height: 37px;
   border-radius: 4px;
-  padding: 10px;
+  padding: 5px 10px;
 `;
 
 const CreateBtn = styled.button`

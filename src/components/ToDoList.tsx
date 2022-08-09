@@ -1,6 +1,7 @@
-import { useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDoListState, toDoSelector } from "../atoms";
+import { categoryState, toDoListState, toDoSelector } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
@@ -18,32 +19,39 @@ const CategoryTitle = styled.h2`
   margin: 10px 0;
 `;
 
+const CategorySelector = styled.select`
+  margin: 10px 0;
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 50%;
+  text-align: left;
+`;
+
+const CategoryOption = styled.option``;
+
 function ToDoList() {
-  const toDoList = useRecoilValue(toDoListState);
-  const [toDos, doings, dones] = useRecoilValue(toDoSelector);
+  const toDoList = useRecoilValue(toDoSelector);
+  // const [toDoList, doings, dones] = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState);
+
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value);
+  };
 
   return (
     <Container>
       <h1>TODO</h1>
       <hr />
       <CreateToDo />
-      <CategoryTitle>To Do</CategoryTitle>
-      <ToDoListContainer>
-        {toDos.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ToDoListContainer>
+      <CategorySelector value={category} onInput={onInput}>
+        <CategoryOption value={"TO_DO"}>To Do</CategoryOption>
+        <CategoryOption value={"DOING"}>Doing</CategoryOption>
+        <CategoryOption value={"DONE"}>Done</CategoryOption>
+      </CategorySelector>
       <hr />
-      <CategoryTitle>Doing</CategoryTitle>
       <ToDoListContainer>
-        {doings.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ToDoListContainer>
-      <hr />
-      <CategoryTitle>Done</CategoryTitle>
-      <ToDoListContainer>
-        {dones.map((toDo) => (
+        {toDoList?.map((toDo) => (
           <ToDo key={toDo.id} {...toDo} />
         ))}
       </ToDoListContainer>
