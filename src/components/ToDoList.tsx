@@ -1,7 +1,12 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { categoryState, toDoListState, toDoSelector } from "../atoms";
+import {
+  Categories,
+  categoryState,
+  toDoListState,
+  toDoSelector,
+} from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
@@ -45,9 +50,9 @@ function ToDoList() {
       <hr />
       <CreateToDo />
       <CategorySelector value={category} onInput={onInput}>
-        <CategoryOption value={"TO_DO"}>To Do</CategoryOption>
-        <CategoryOption value={"DOING"}>Doing</CategoryOption>
-        <CategoryOption value={"DONE"}>Done</CategoryOption>
+        <CategoryOption value={Categories.TO_DO}>To Do</CategoryOption>
+        <CategoryOption value={Categories.DOING}>Doing</CategoryOption>
+        <CategoryOption value={Categories.DONE}>Done</CategoryOption>
       </CategorySelector>
       <hr />
       <ToDoListContainer>

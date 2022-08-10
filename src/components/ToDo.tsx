@@ -1,7 +1,7 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { IToDo, toDoListState } from "../atoms";
+import { IToDo, toDoListState, Categories } from "../atoms";
 
 const TODOBtn = styled.button`
   font-size: 20px;
@@ -69,18 +69,18 @@ function ToDo({ text, id, category }: IToDo) {
     <ToDoContainer>
       <span>{text}</span>
       <div>
-        {category !== "TO_DO" && (
-          <TODOBtn name="TO_DO" onClick={onClickCategory}>
+        {category !== Categories.TO_DO && (
+          <TODOBtn name={Categories.TO_DO} onClick={onClickCategory}>
             To Do
           </TODOBtn>
         )}
-        {category !== "DOING" && (
-          <DOINGBtn name="DOING" onClick={onClickCategory}>
+        {category !== Categories.DOING && (
+          <DOINGBtn name={Categories.DOING} onClick={onClickCategory}>
             Doing
           </DOINGBtn>
         )}
-        {category !== "DONE" && (
-          <DONEBtn name="DONE" onClick={onClickCategory}>
+        {category !== Categories.DONE && (
+          <DONEBtn name={Categories.DONE} onClick={onClickCategory}>
             Done
           </DONEBtn>
         )}
