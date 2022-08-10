@@ -6,8 +6,7 @@ export interface IToDo {
   category: "TO_DO" | "DOING" | "DONE";
 }
 
-//<IToDo["category"]>
-export const categoryState = atom({
+export const categoryState = atom<IToDo["category"]>({
   key: "category",
   default: "TO_DO",
 });

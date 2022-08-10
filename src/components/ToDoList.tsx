@@ -36,7 +36,7 @@ function ToDoList() {
   const [category, setCategory] = useRecoilState(categoryState);
 
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value);
+    setCategory(event.currentTarget.value as any);
   };
 
   return (
