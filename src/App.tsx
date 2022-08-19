@@ -63,6 +63,7 @@ function App() {
                     )}
                   </Draggable>
                 ))}
+                {provided.placeholder}
               </Board>
             )}
           </Droppable>
