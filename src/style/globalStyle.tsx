@@ -41,12 +41,6 @@ body {
   background: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
 }
-button{
-  background-color: ${(props) => props.theme.btnColor};
-}
-button:hover{
- background-color: ${(props) => props.theme.btnHoverColor};
-}
 menu, ol, ul {
   list-style: none;
 }

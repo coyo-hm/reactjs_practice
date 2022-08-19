@@ -1,4 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import styled from "styled-components";
+
+const Board = styled.div``;
 
 function App() {
   const onDragEnd = () => {};
@@ -9,7 +12,7 @@ function App() {
         <Droppable droppableId="1">
           {(provided) => (
             <ul ref={provided.innerRef} {...provided.droppableProps}>
-              <Draggable draggableId="1" index={0}>
+              <Draggable draggableId="First" index={0}>
                 {(provided) => (
                   <li ref={provided.innerRef} {...provided.draggableProps}>
                     <span {...provided.dragHandleProps}>🎵</span>
@@ -17,7 +20,7 @@ function App() {
                   </li>
                 )}
               </Draggable>
-              <Draggable draggableId="2" index={1}>
+              <Draggable draggableId="Second" index={1}>
                 {(provided) => (
                   <li ref={provided.innerRef} {...provided.draggableProps}>
                     <span {...provided.dragHandleProps}>🎵</span>
