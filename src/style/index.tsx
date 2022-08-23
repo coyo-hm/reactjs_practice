@@ -17,14 +17,6 @@ export const Boards = styled.div`
   grid-template-columns: repeat(1, 1fr);
 `;
 
-export const Board = styled.div`
-  padding: 20px 10px;
-  padding-top: 30px;
-  background-color: ${(prop) => prop.theme.boardColor};
-  border-radius: 5px;
-  min-height: 200px;
-`;
-
 export const Card = styled.div`
   background-color: ${(prop) => prop.theme.cardColor};
   color: ${(prop) => prop.theme.textColor};
