@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 15px;
+  font-weight: 700;
 `;
 
 interface IBoardProps {
