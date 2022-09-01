@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DraggableCard from "./DraggableCard";
 
 export const Wrapper = styled.div`
-  padding: 20px 10px;
+  padding: 10px 0;
   background-color: ${(prop) => prop.theme.boardColor};
   border-radius: 5px;
   min-height: 200px;
@@ -30,8 +30,8 @@ const Area = styled.div<IAreaProps>`
       ? "#f9ca24"
       : ""};
   flex-grow: 1;
-  border-radius: 5px;
   transition: background-color 0.3s ease-in-out;
+  padding: 10px;
 `;
 
 interface IBoardProps {

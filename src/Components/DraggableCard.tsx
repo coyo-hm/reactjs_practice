@@ -10,8 +10,9 @@ interface IDraggableCardProps {
 function DraggableCard({ toDo, idx }: IDraggableCardProps) {
   return (
     <Draggable draggableId={toDo} index={idx}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <Card
+          isDragging={snapshot.isDragging}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
