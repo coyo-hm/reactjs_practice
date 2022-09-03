@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   DragDropContext,
   DropResult,
   Droppable,
-  Draggable,
+  DragStart,
 } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { IToDoState, toDoState } from "./atoms";
@@ -43,15 +43,16 @@ const CreateBoard = styled.form`
 
 const DeleteBtn = styled.button`
   background: url(${IconBinClosed}) no-repeat center/50px;
-  width: 50px;
-  height: 50px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
   border: none;
   position: absolute;
   bottom: calc(50% - 250px);
   left: calc(50% - 25px);
 
   &:hover {
-    background: url(${IconBinOpened}) no-repeat center/50px;
+    background: #181a1d url(${IconBinOpened}) no-repeat center/50px;
   }
 `;
 
@@ -62,6 +63,8 @@ interface IForm {
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
+  const [isBoardDropDisabled, setIsBoardDropDisabled] = useState(false);
+  const [isCardDropDisabled, setIsCardDropDisabled] = useState(false);
 
   useEffect(() => {
     let savedTodo: IToDoState[] = JSON.parse(
@@ -75,10 +78,15 @@ function App() {
   }, [toDos]);
 
   const onDragEnd = (info: DropResult) => {
+    console.log(info);
     const { destination, draggableId, source, type } = info;
     if (!destination) return;
 
-    if (type === CONSTANT.DROP_TYPE.BOARD) {
+    if (destination.droppableId === CONSTANT.DROP_TYPE.DELETE) {
+      return source.droppableId !== CONSTANT.DROP_TYPE.BOARD
+        ? deleteCard(source.droppableId, source.index)
+        : deleteBoard(draggableId);
+    } else if (destination.droppableId === CONSTANT.DROP_TYPE.BOARD) {
       setToDos((allBoards) => {
         const newBoard = [...allBoards];
         const targetBoard = allBoards[source.index];
@@ -88,7 +96,7 @@ function App() {
 
         return newBoard;
       });
-    } else if (type === CONSTANT.DROP_TYPE.CARD) {
+    } else if (destination.droppableId !== CONSTANT.DROP_TYPE.BOARD) {
       if (destination?.droppableId === source.droppableId) {
         //같은 보드 내에서 움직일때
         setToDos((allBoards) => {
@@ -159,25 +167,61 @@ function App() {
     setValue("boardId", "");
   };
 
+  const deleteCard = (boardId: string, cardId: number) => {
+    setToDos((allBoards) => {
+      const targetBoard = allBoards.find((board) => board.id === boardId);
+      if (!targetBoard?.list) return allBoards;
+      const newList = [...targetBoard?.list];
+      newList.splice(cardId, 1);
+      const newBoards = allBoards.map((board) =>
+        board.id === boardId ? { id: boardId, list: newList } : board
+      );
+      return newBoards;
+    });
+  };
+
+  const deleteBoard = (boardId: string) => {
+    setToDos((allBoards) => allBoards.filter((board) => board.id !== boardId));
+  };
+
+  const onDragStart = ({ source }: DragStart) => {
+    setIsBoardDropDisabled(source.droppableId !== CONSTANT.DROP_TYPE.BOARD);
+    setIsCardDropDisabled(source.droppableId === CONSTANT.DROP_TYPE.BOARD);
+  };
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Container>
-        <Droppable droppableId={"boards"} type={CONSTANT.DROP_TYPE.BOARD}>
+        <Droppable
+          droppableId={CONSTANT.DROP_TYPE.BOARD}
+          isDropDisabled={isBoardDropDisabled}
+          direction={"horizontal"}
+        >
           {(provided) => (
             <Boards {...provided.droppableProps} ref={provided.innerRef}>
-              {toDos.map((board, idx) => (
-                <DraggableBoard idx={idx} key={board.id} board={board} />
-              ))}
               <BoardContainer>
                 <CreateBoard onSubmit={handleSubmit(createBoard)}>
                   <input {...register("boardId", { required: true })} />
                   <button type="submit" />
                 </CreateBoard>
               </BoardContainer>
+              {toDos.map((board, idx) => (
+                <DraggableBoard
+                  idx={idx}
+                  key={board.id}
+                  board={board}
+                  dropDisable={isCardDropDisabled}
+                />
+              ))}
+              {provided.placeholder}
             </Boards>
           )}
         </Droppable>
-        <DeleteBtn />
+        <Droppable droppableId={CONSTANT.DROP_TYPE.DELETE}>
+          {(provided) => (
+            <DeleteBtn {...provided.droppableProps} ref={provided.innerRef} />
+          )}
+        </Droppable>
       </Container>
     </DragDropContext>
   );

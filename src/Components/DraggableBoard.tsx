@@ -48,13 +48,14 @@ const Form = styled.form`
 interface IBoardProps {
   board: IToDoState;
   idx: number;
+  dropDisable: boolean;
 }
 
 interface IForm {
   toDo: string;
 }
 
-function DraggableBoard({ board, idx }: IBoardProps) {
+function DraggableBoard({ board, idx, dropDisable }: IBoardProps) {
   const setToDos = useSetRecoilState(toDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
 
@@ -91,7 +92,7 @@ function DraggableBoard({ board, idx }: IBoardProps) {
               placeholder={`Add task on ${board.id}`}
             />
           </Form>
-          <Droppable droppableId={board.id} type={CONSTANT.DROP_TYPE.CARD}>
+          <Droppable droppableId={board.id} isDropDisabled={dropDisable}>
             {(provided, snapshot) => (
               <Area
                 isDraggingOver={snapshot.isDraggingOver}
