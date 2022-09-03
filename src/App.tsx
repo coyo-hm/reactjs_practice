@@ -1,11 +1,21 @@
+import { useEffect } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
-import { toDoState } from "./atoms";
+import { IToDoState, toDoState } from "./atoms";
 import Board from "./Components/Board";
 import { Container, Boards } from "./style";
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
+
+  useEffect(() => {
+    let savedTodo: IToDoState = JSON.parse(localStorage.getItem("TODOS") || "");
+    setToDos(savedTodo);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("TODOS", JSON.stringify(toDos));
+  }, [toDos]);
 
   const onDragEnd = (info: DropResult) => {
     const { destination, draggableId, source } = info;
