@@ -45,6 +45,10 @@ const Form = styled.form`
     width: 100%;
     border: none;
     padding: 10px;
+    outline: none;
+  }
+
+  button {
   }
 `;
 
@@ -80,7 +84,7 @@ function Board({ toDos, boardId }: IBoardProps) {
       <Title>{boardId}</Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <input
-          {...(register("toDo"), { required: true })}
+          {...register("toDo", { required: true })}
           type={"text"}
           placeholder={`Add task on ${boardId}`}
         />
@@ -93,14 +97,16 @@ function Board({ toDos, boardId }: IBoardProps) {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {toDos.map((toDo, idx) => (
-              <DraggableCard
-                key={toDo.id}
-                idx={idx}
-                toDoId={toDo.id}
-                toDoText={toDo.text}
-              />
-            ))}
+            {toDos.map((toDo, idx) => {
+              return (
+                <DraggableCard
+                  key={toDo.id}
+                  idx={idx}
+                  toDoId={toDo.id}
+                  toDoText={toDo.text}
+                />
+              );
+            })}
             {provided.placeholder}
           </Area>
         )}
