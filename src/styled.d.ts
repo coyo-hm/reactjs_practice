@@ -7,5 +7,7 @@ declare module "styled-components" {
     btnColor: string;
     btnHoverColor: string;
     accentColor: string;
+    boxColor: string;
+    boxTextColor: string;
   }
 }

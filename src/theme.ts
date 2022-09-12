@@ -6,6 +6,8 @@ export const darkTheme: DefaultTheme = {
   btnColor: "#fbc531",
   btnHoverColor: "#e1b12c",
   accentColor: "#e17055",
+  boxColor: "black",
+  boxTextColor: "white",
 };
 
 export const lightTheme: DefaultTheme = {
@@ -14,4 +16,6 @@ export const lightTheme: DefaultTheme = {
   btnColor: "#fbc531",
   btnHoverColor: "#e1b12c",
   accentColor: "#e17055",
+  boxTextColor: "black",
+  boxColor: "white",
 };

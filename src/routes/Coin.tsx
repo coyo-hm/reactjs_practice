@@ -18,6 +18,7 @@ const InfoContainer = styled.div`
     margin: 20px 0;
     font-size: 16px;
     line-height: 24px;
+    color: ${(props) => props.theme.boxTextColor};
   }
 `;
 
@@ -26,7 +27,8 @@ const Overview = styled.div`
   display: flex;
   justify-content: space-between;
   border-radius: 10px;
-  background-color: #1e2129;
+  background-color: ${(props) => props.theme.boxColor};
+  color: ${(props) => props.theme.boxTextColor};
   padding: 20px;
 
   div {
@@ -47,13 +49,13 @@ const Tabs = styled.div`
 `;
 
 const Tab = styled(Link)<{ isactive: string }>`
-  background-color: #1e2129;
+  background-color: ${(props) => props.theme.boxColor};
   text-align: center;
   text-transform: uppercase;
   color: ${(props) =>
     props.isactive === "true"
       ? props.theme.accentColor
-      : props.theme.textColor};
+      : props.theme.boxTextColor};
   font-size: 20px;
   font-weight: 400px;
   border-radius: 20px;
@@ -62,8 +64,8 @@ const Tab = styled(Link)<{ isactive: string }>`
 `;
 
 const BackBtn = styled(Link)`
-  border: 1px solid ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.textColor};
+  border: 1px solid ${(props) => props.theme.boxTextColor};
+  color: ${(props) => props.theme.boxTextColor};
   background-color: transparent;
   border-radius: 4px;
   font-size: 24px;
@@ -74,7 +76,7 @@ const BackBtn = styled(Link)`
   padding: 5px;
 
   &:hover {
-    background-color: #1e2129;
+    background-color: ${(props) => props.theme.boxColor};
   }
 `;
 
