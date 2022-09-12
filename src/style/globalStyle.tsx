@@ -23,6 +23,7 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font-size: 100%;
+  box-sizing: border-box;
   font: inherit;
   vertical-align: baseline;
   font-family: 'Source Sans Pro', sans-serif;
