@@ -37,9 +37,11 @@ footer, header, hgroup, main, menu, nav, section {
     display: none;
 }
 body {
-  line-height: 1;
+  font-weight: 300;
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.2;
   margin: 0;
-  background: ${(props) => props.theme.bgColor};
+  background: linear-gradient(135deg, #e09, #d0e);
   color: ${(props) => props.theme.textColor};
 }
 menu, ol, ul {
