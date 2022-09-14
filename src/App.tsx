@@ -11,7 +11,7 @@ import { IToDoState, toDoState } from "./atoms";
 import styled from "styled-components";
 
 import { Container, Boards, BoardContainer } from "./style";
-import DraggableBoard from "./Components/DraggableBoard";
+import DraggableBoard from "./components/DraggableBoard";
 import IconPlusWhite from "./images/Icon_plus_white.png";
 import IconPlusSkyblue from "./images/Icon_plus_skyblue.png";
 import IconBinClosed from "./images/Icon_bin_closed.png";
@@ -217,6 +217,7 @@ function App() {
             </Boards>
           )}
         </Droppable>
+        s
         <Droppable droppableId={CONSTANT.DROP_TYPE.DELETE}>
           {(provided) => (
             <DeleteBtn {...provided.droppableProps} ref={provided.innerRef} />

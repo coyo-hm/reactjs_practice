@@ -1,10 +1,8 @@
-import { useRef } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { IToDo, IToDoState, toDoState } from "../atoms";
-import { CONSTANT } from "../helpers/constant";
+import { IToDoState, toDoState } from "../atoms";
 import { BoardContainer } from "../style";
 import DraggableCard from "./DraggableCard";
 

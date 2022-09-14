@@ -2,6 +2,8 @@
 
 ## Introduction
 
+![kanbanBoard](https://user-images.githubusercontent.com/56423604/190161431-7380bd3d-68fa-4d0a-9e54-fb3b9b2276e4.gif)
+
 ## Tech Stack
 
 - react v_18.2.0
