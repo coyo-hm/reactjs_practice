@@ -41,7 +41,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.2;
   margin: 0;
-  background: linear-gradient(135deg, #e09, #d0e);
+  background-color: black;
   color: ${(props) => props.theme.textColor};
 }
 menu, ol, ul {

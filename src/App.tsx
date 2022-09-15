@@ -1,26 +1,24 @@
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
+import Animations from "./components/Animations";
+
+const Container = styled.div`
+  /* height: 100vh; */
+  /* width: 100vw; */
+  width: fit-content;
+  margin: 100px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   justify-content: center;
   align-items: center;
 `;
 
-const Box = styled.div`
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-`;
-
 function App() {
   return (
-    <Wrapper>
-      <Box />
-    </Wrapper>
+    <Container>
+      <Animations />
+    </Container>
   );
 }
 
