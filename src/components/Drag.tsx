@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Wrapper as BoxWrapper, Box as DefaultBox } from "../style";
 
 const Wrapper = styled(BoxWrapper)`
-  background: linear-gradient(135deg, #453bb1, #1b1464);
+  background: linear-gradient(135deg, #464abf, #301bb7);
 `;
 
 const Box = styled(DefaultBox)``;
