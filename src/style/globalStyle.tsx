@@ -41,8 +41,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.2;
   margin: 0;
-  background-color: black;
-  color: ${(props) => props.theme.textColor};
+  color: black;
 }
 menu, ol, ul {
   list-style: none;
