@@ -4,10 +4,11 @@ import Home from "./routes/Home";
 import Search from "./routes/Search";
 import TV from "./routes/TV";
 
-const SITE_URL = {
+export const SITE_URL = {
   HOME: "/",
   TV: "/tv",
   SEARCH: "/search",
+  MOVIE: "/movies/:movieId",
 };
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <Routes>
         <Route path={SITE_URL.HOME} element={<Home />} />
+        <Route path={SITE_URL.MOVIE} element={<Home />} />
         <Route path={SITE_URL.TV} element={<TV />} />
         <Route path={SITE_URL.SEARCH} element={<Search />} />
       </Routes>

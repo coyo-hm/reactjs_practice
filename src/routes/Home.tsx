@@ -4,6 +4,8 @@ import { getMovies, IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import { SITE_URL } from "../App";
 
 const DEFAULT_GAP = 5;
 
@@ -60,6 +62,7 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-size: cover;
   background-position: center center;
   height: 200px;
+  cursor: pointer;
 
   &:first-child {
     transform-origin: center left;
@@ -113,6 +116,8 @@ const infoVariants = {
 const DEFAULT_PAGE_SIZE = 6;
 
 function Home() {
+  const navigate = useNavigate();
+  const bigMovieMatch: PathMatch<string> | null = useMatch(SITE_URL.MOVIE);
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
     getMovies
@@ -135,6 +140,10 @@ function Home() {
 
   const toggleLeaving = () => {
     setLeaving((prev) => !prev);
+  };
+
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
   };
 
   console.log(data, isLoading);
@@ -166,12 +175,14 @@ function Home() {
                   )
                   .map((movie) => (
                     <Box
+                      layoutId={movie.id + ""}
                       key={movie.id}
                       variants={boxVariants}
                       initial="normal"
                       whileHover="hover"
                       transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path || "", "w500")}
+                      onClick={() => onBoxClicked(movie.id)}
                     >
                       {/* <img
                         src={makeImagePath(movie.backdrop_path || "", "w500")}
@@ -186,6 +197,23 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {bigMovieMatch && (
+              <motion.div
+                layoutId={bigMovieMatch.params?.movieId}
+                style={{
+                  position: "absolute",
+                  width: "40vw",
+                  height: "80vh",
+                  backgroundColor: "red",
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  margin: "0 auto",
+                }}
+              ></motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </Wrapper>
