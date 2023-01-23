@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import { SITE_URL } from "../App";
+import { theme } from "../style/theme";
 
 const DEFAULT_GAP = 5;
 
@@ -103,6 +104,34 @@ const MovieModal = styled(motion.div)`
   left: 0;
   right: 0;
   margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: ${(props) => props.theme.black.lighter};
+
+  h2 {
+    color: ${(props) => props.theme.white.lighter};
+    text-align: left;
+    font-size: 36px;
+    font-weight: 600;
+    position: relative;
+    top: -30px;
+    padding: 20px;
+  }
+
+  p {
+    position: relative;
+    top: -30px;
+    padding: 20px;
+    color: ${(props) => props.theme.white.lighter};
+    font-weight: 300;
+  }
+`;
+
+const MovieModalCover = styled.div`
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center center;
 `;
 
 const rowVariants = {
@@ -144,6 +173,12 @@ function Home() {
 
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+
+  const clickedMovie =
+    movieModalMatch?.params.movieId &&
+    data?.results.find(
+      (movie) => movie.id === Number(movieModalMatch.params.movieId)
+    );
 
   const increaseIndex = () => {
     if (data) {
@@ -229,7 +264,23 @@ function Home() {
                 <MovieModal
                   style={{ top: scrollY.get() + 100 }}
                   layoutId={movieModalMatch.params?.movieId}
-                ></MovieModal>
+                >
+                  {clickedMovie && (
+                    <>
+                      <MovieModalCover
+                        style={{
+                          backgroundImage: `linear-gradient(transparent, ${
+                            theme.black.lighter
+                          }), url(${makeImagePath(
+                            clickedMovie.backdrop_path || ""
+                          )})`,
+                        }}
+                      />
+                      <h2>{clickedMovie.title}</h2>
+                      <p>{clickedMovie.overview}</p>
+                    </>
+                  )}
+                </MovieModal>
               </>
             )}
           </AnimatePresence>
