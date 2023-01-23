@@ -1,7 +1,9 @@
-import { Link, PathMatch, useMatch } from "react-router-dom";
+import { Link, PathMatch, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { SITE_URL } from "../App";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -51,7 +53,7 @@ const Item = styled.li`
   }
 `;
 
-const Search = styled.span`
+const Search = styled.form`
   display: flex;
   align-items: center;
   color: white;
@@ -110,12 +112,18 @@ const navVariants = {
   },
 };
 
+interface IForm {
+  keyword: string;
+}
+
 function Header() {
+  const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch: PathMatch<string> | null = useMatch("/");
   const tvMatch: PathMatch<string> | null = useMatch("/tv");
   const navAnimation = useAnimation();
   const { scrollY } = useScroll();
+  const { register, handleSubmit } = useForm<IForm>();
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -126,6 +134,11 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+
+  const onValid = (data: IForm) => {
+    console.log(data);
+    navigate(SITE_URL.SEARCH + `?keyword=${data.keyword}`);
+  };
 
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
@@ -157,7 +170,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             animate={{ x: searchOpen ? -200 : 0 }}
             transition={{ type: "linear" }}
@@ -170,9 +183,10 @@ function Header() {
               fillRule="evenodd"
               d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
               clipRule="evenodd"
-            ></path>
+            />
           </motion.svg>
           <Input
+            {...register("keyword", { required: true, minLength: 2 })}
             animate={{ scaleX: searchOpen ? 1 : 0 }}
             transition={{ type: "linear" }}
             placeholder="Search for movie or tv show..."
